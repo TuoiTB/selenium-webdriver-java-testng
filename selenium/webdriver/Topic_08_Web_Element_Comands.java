@@ -33,7 +33,7 @@ public class Topic_08_Web_Element_Comands {
 		//Tìm element xong thì nhập text vào
 		driver.findElement(By.id("email")).sendKeys("Test@automaiton.com");
 	}
-
+	
 	
 	@AfterClass
 	public void afterClass() {

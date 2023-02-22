@@ -1,15 +1,22 @@
 package webdriver;
 
-import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.Point;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.net.Urls;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import com.beust.jcommander.internal.Sets;
 
 public class Topic_07_Web_Browser_Commands {
 	WebDriver driver;
@@ -30,28 +37,28 @@ public class Topic_07_Web_Browser_Commands {
 	}
 	
 	@Test
-	public void TC_01_Browser() {
+	public <Cookie> void TC_01_Browser() throws MalformedURLException {
 		//Các command/hàm để tương tác với Browser thì nó thông qua biến driver
 		//Dùng để đóng tab hiện tại hoặc có thể đóng browser nếu chỉ có 1 tab trên browser đó
 		//Dùng khi handle windows/tab
-		driver.close(); 
+		driver.close(); //**
 		
 		//Đóng browser. Không quan tâm bao nhiêu tab. đóng toàn bộ cả browser
-		driver.quit(); 
+		driver.quit(); //**
 		
 		//Tìm 1 element với locator nào đó (id/class/name/css/xpath/...)
-		driver.findElement(By.id(""));
+		driver.findElement(By.id("")); //**
 		
 		//Tìm nhiều element với nhiều locator nào đó. Ví dụ cần tìm nhiều checkbox/radio
 		driver.findElements(By.xpath("//a"));
-		driver.findElements(By.xpath("//input[@type='checkbox']"));
+		driver.findElements(By.xpath("//input[@type='checkbox']")); //**
 		
 		//Mở ra 1 page url nào đó
-		driver.get("http://live.techpanda.org/index.php/customer/account/login/");
+		driver.get("http://live.techpanda.org/index.php/customer/account/login/"); //**
 		driver.get("http://live.techpanda.org/index.php");
 		
 		//Lấy ra url của page hiện tại. Đang đứng tại page nào thì lấy của page đó
-		driver.getCurrentUrl();
+		driver.getCurrentUrl();//*
 		
 		//So sánh actual với expected:
 		//Cách 1: (Dùng khi chỉ sử dụng 1 lần)
@@ -68,28 +75,74 @@ public class Topic_07_Web_Browser_Commands {
 		
 		
 		//Lấy ra Title của page hiện tại. Dùng để kiểm tra title của page hiện tại xem đúng hay sai
-		driver.getTitle();
+		driver.getTitle();//*
 		Assert.assertEquals(driver.getTitle(),"Custermer Login" );
 		
 		
 		// Window/Tab
 		//Lấy ra id của tab/window mà driver đang đứng
-		driver.getWindowHandle();
+		driver.getWindowHandle();//*
 		
 		//Lấy ra tất cả id của các tab/window
-		driver.getWindowHandles();
+		driver.getWindowHandles();//*
 		
 		//Cookies
-		driver.manage().getCookies();
+		driver.manage().deleteAllCookies();//*
+		
 		
 		//Log của browser:
 		driver.manage().logs().get(LogType.BROWSER);
 		
 		//define ra 1 đơn vị thời gian để chờ cho element xuất hiện trong bao lâu
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);//**
 		driver.manage().timeouts().implicitlyWait(15000, TimeUnit.MILLISECONDS);
-		driver.manage().timeouts().implicitlyWait(15000, TimeUnit.DAYS);
-		driver.manage().timeouts().implicitlyWait(15000, TimeUnit.MINUTES);
+		driver.manage().timeouts().implicitlyWait(1, TimeUnit.DAYS);
+		driver.manage().timeouts().implicitlyWait(1, TimeUnit.MINUTES);
+		
+		//Chowfcho page được load trong vòng bao lâu
+		driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.MINUTES);
+		
+		//Chờ cho đoạn script được thực thi xong
+		//JavascriptExecutor
+		driver.manage().timeouts().setScriptTimeout(1, TimeUnit.MINUTES);
+		driver.manage();
+		
+		//Windows
+		//Fullscreen
+		driver.manage().window().fullscreen();
+		
+		//Maximize
+		driver.manage().window().maximize();//**
+		
+		//Lấy vị trí ra
+		Point point = driver.manage().window().getPosition();
+		point.getX();
+		point.getY();
+		
+		//Set tại 1 vị trí nào đó
+		driver.manage().window().setPosition(new Point(0, 0));
+		
+		Dimension dimension = driver.manage().window().getSize();
+		dimension.getWidth();
+		dimension.getHeight();
+		
+		//Set chiều rộng chiều cao cho browser
+		driver.manage().window().setSize(new Dimension(1366, 768));
+		
+		//Navigatate
+		driver.navigate().back();
+		driver.navigate().forward();
+		driver.navigate().refresh();
+		driver.navigate().to("https://www.facebook.com/");
+		driver.navigate().to(new URL("https://www.facebook.com/"));
+		
+		
+		//Windows
+		//Frame/IFrame
+		//Alert
+		driver.switchTo().alert();//*
+		driver.switchTo().frame(1);//*
+		driver.switchTo().window("");//*
 		
 	}
 	
