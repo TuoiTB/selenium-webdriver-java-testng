@@ -1,7 +1,6 @@
-package Exercise;
+package webdriver;
 
 import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -10,7 +9,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class Topic_07_08_Web_Browser_And_Element_Commands {
+public class Topic_09_WebBrowser_Exercises {
 	WebDriver driver;
 	String projectPath = System.getProperty("user.dir");
 	String osName = System.getProperty("os.name");
@@ -44,7 +43,7 @@ public class Topic_07_08_Web_Browser_And_Element_Commands {
 		//Step 04: Click CREATE AN ACCOUNT button
 		driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
 				
-		//Step 05: Verify URL của Register Page = "http://live.techpanda.org/customer/account/create/"
+		//Step 05: Verify URL của Register Page = "http://live.techpanda.org/index.php/customer/account/create/"
 		Assert.assertEquals(driver.getCurrentUrl(), "http://live.techpanda.org/index.php/customer/account/create/");
 			
 	}
