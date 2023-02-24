@@ -70,11 +70,93 @@ public class Topic_10_WebElement_Exercises {
 
 	@Test
 	public void TC_02_Enabled() {
+		//Step 01: Truy cập trang https://automationfc.github.io/basic-form/index.html
+		driver.get("https://automationfc.github.io/basic-form/index.html");
 		
+		//Step 02: Kiểm tra phần tử sau enable trên trang: Email, Age, education, job role 01/ job role 02,interests checkbox, slider 01
+		//Email
+		if (driver.findElement(By.id("mail")).isEnabled()) {
+			System.out.println("Element is enabled");
+		}	else
+		{
+			System.out.println("Element is disabled");
+		}
+		
+		//Age
+		if(driver.findElement(By.xpath("//label[text()='Under 18']")).isEnabled()) {
+			System.out.println("Element is enabled");
+		}	else
+		{
+			System.out.println("Element is disabled");
+		}
+		
+		//Education
+		if(driver.findElement(By.id("edu")).isEnabled()) {
+			System.out.println("Element is enabled");
+		}	else
+		{
+			System.out.println("Element is disabled");
+		}
+		
+		//Job role 01
+		if(driver.findElement(By.id("job1")).isEnabled()) {
+			System.out.println("Element is enabled");
+		}	else
+		{
+			System.out.println("Element is disabled");
+		}
+		
+		//slider 01
+		if(driver.findElement(By.id("slider-1")).isEnabled()) {
+			System.out.println("Element is enabled");
+		}	else 
+		{
+			System.out.println("Element is disabled");
+		}
+		
+		//Check box is disabled
+		if(driver.findElement(By.xpath("//label[@for='check-disbaled']")).isEnabled()) {
+			System.out.println("Element is enabled");
+		}	else 
+		{
+			System.out.println("Element is disabled");
+		}
+		
+		//Slider 02 disabled
+		if(driver.findElement(By.id("slider-2")).isEnabled()) {
+			System.out.println("Element is enabled");
+		}	else 
+		{
+			System.out.println("Element is disabled");
+		}
 	}
+		
 	
 	@Test
 	public void TC_03_Selected() {
+		//Step 01: Truy cập trang https://automationfc.github.io/basic-form/index.html
+		driver.get("https://automationfc.github.io/basic-form/index.html");
+		
+		//Step 02: Click chọn 
+		//Age (under 18) radio button
+		driver.findElement(By.xpath("//label[text()='Under 18']")).click();
+		//"Languages:Java" checkbox
+		driver.findElement(By.xpath("//label[@for='java']")).click();
+		sleepInSecond(3);
+		
+		//Step 03: Kiểm tra các phần tử tại step 2 đã được chọn
+		//Hàm assertTrue dùng để kiểm tra 1 element đã được chọn thành công 
+		Assert.assertTrue(driver.findElement(By.xpath("//label[text()='Under 18']")).isSelected());
+		//Hàm assertFalse dùng để kiểm tra 1 element chưa được chọn thành công
+		Assert.assertFalse(driver.findElement(By.xpath("//label[text()='Under 18']")).isSelected());
+		
+		//Step 04: Click dể bỏ chọn "Languages:Java" checkbox 
+		driver.findElement(By.xpath("//label[text()='Under 18']")).click();
+		driver.findElement(By.xpath("//label[@for='java']")).click();
+		
+		//Step 05: Kiểm tra phần tử "Languages:Java" checkbox đã được bỏ chọn
+		Assert.assertFalse(driver.findElement(By.xpath("//label[@for='java']")).isSelected());
+		Assert.assertFalse(driver.findElement(By.xpath("//label[text()='Under 18']")).isSelected());
 		
 	}
 	
