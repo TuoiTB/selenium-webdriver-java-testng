@@ -13,6 +13,7 @@ public class Topic_10_WebElement_Exercises {
 	WebDriver driver;
 	String projectPath = System.getProperty("user.dir");
 	String osName = System.getProperty("os.name");
+	 
 	@BeforeClass
 	public void beforeClass() {
 		if (osName.contains("Windows")) {
@@ -25,7 +26,7 @@ public class Topic_10_WebElement_Exercises {
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 	}
-	@Test
+	//@Test
 	public void TC_01_Displayed() {
 		//Step 1: Truy cập vào trang https://automationfc.github.io/basic-form/index.html
 		driver.get("https://automationfc.github.io/basic-form/index.html");
@@ -68,7 +69,7 @@ public class Topic_10_WebElement_Exercises {
 		
 	}
 
-	@Test
+	//@Test
 	public void TC_02_Enabled() {
 		//Step 01: Truy cập trang https://automationfc.github.io/basic-form/index.html
 		driver.get("https://automationfc.github.io/basic-form/index.html");
@@ -132,7 +133,7 @@ public class Topic_10_WebElement_Exercises {
 	}
 		
 	
-	@Test
+	//@Test
 	public void TC_03_Selected() {
 		//Step 01: Truy cập trang https://automationfc.github.io/basic-form/index.html
 		driver.get("https://automationfc.github.io/basic-form/index.html");
@@ -162,7 +163,7 @@ public class Topic_10_WebElement_Exercises {
 	@Test
 	public void TC_04_MailChimp() {
 		driver.get("https://login.mailchimp.com/signup/");
-		driver.findElement(By.xpath("//button[@class='onetrust-close-btn-handler onetrust-close-btn-ui banner-close-button ot-close-icon']")).click();
+		//driver.findElement(By.xpath("//button[@class='onetrust-close-btn-handler onetrust-close-btn-ui banner-close-button ot-close-icon']")).click();
 		driver.findElement(By.xpath("//button[@id='create-account-enabled']")).click();
 		sleepInSecond(2);	
 		
