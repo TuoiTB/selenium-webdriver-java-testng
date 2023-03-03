@@ -30,7 +30,7 @@ public class Topic_12_Textbox_TextArea_Part_II {
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
-		userName = "automation" + rand.nextInt(999);
+		userName = "automation" + rand.nextInt(9999);
 		firstName = "John";
 		lastName = "Wick";
 		password = "autoFC123@";
@@ -53,7 +53,8 @@ public class Topic_12_Textbox_TextArea_Part_II {
 		driver.findElement(
 				By.xpath("//button[@class='oxd-button oxd-button--medium oxd-button--main orangehrm-login-button']"))
 				.click();
-
+		sleepInSecond(2);
+		
 		// Step 03: Mở trang PIM
 		driver.findElement(By.xpath("//span[text()='PIM']")).click();
 
@@ -66,46 +67,54 @@ public class Topic_12_Textbox_TextArea_Part_II {
 
 		// Get data từ EmployeeID textbox lưu vào biến để sử dụng cho các step sau
 		employeeID = driver.findElement(By.xpath("//label[text()='Employee Id']/parent::div/following-sibling::div/input")).getAttribute("value");
-		System.out.println(employeeID);
+		//System.out.println(employeeID);
+		sleepInSecond(3);
+		
 		// Click "Create Login Details"
 		driver.findElement(By.xpath("//p[text()='Create Login Details']/following-sibling::div/label/span")).click();
-
+		sleepInSecond(3);
+		
+		
 		// Nhập thông tin hợp lệ vào các textbox: Username/Password/Confirm Password
 		driver.findElement(By.xpath("//label[text()='Username']/parent::div/following-sibling::div/input")).sendKeys(userName);
 		driver.findElement(By.xpath("//label[text()='Password']/parent::div/following-sibling::div/input")).sendKeys(password);
 		driver.findElement(By.xpath("//label[text()='Confirm Password']/parent::div/following-sibling::div/input")).sendKeys(password);
-
+		sleepInSecond(5);
+		
 		// Step 06: Click Save button
 		driver.findElement(By.xpath("//button[contains(string(),'Save')]")).click();
-
-		// Step 07: Verify dữ liệu đã nhập ở màn hình Add Employee đúng với dữ liệu hiển
-		// thị ở trang Persional Detail
-
+		
+		// Step 07: Verify dữ liệu đã nhập ở màn hình Add Employee đúng với dữ liệu hiển thị ở trang Persional Detail
+		
 		Assert.assertEquals(driver.findElement(By.cssSelector("input[name='firstName']")).getAttribute("value"),firstName);
 		Assert.assertEquals(driver.findElement(By.cssSelector("input[name='lastName']")).getAttribute("value"),lastName);
 		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Employee Id']/parent::div/following-sibling::div/input")).getAttribute("value"),employeeID);
 
 		// Step 08: Click vào tab Immigration
 		driver.findElement(By.xpath("//a[text()='Immigration']")).click();
-
+		sleepInSecond(5);
+		
 		// Step 09: Click Add tại Assigned Immigration Records
 		driver.findElement(By.xpath("//h6[text()='Assigned Immigration Records']/following-sibling::button")).click();
-
+		sleepInSecond(5);
+		
 		// Step 10: Nhập dữ liệu vào Number/Comments và click Save button
 		driver.findElement(By.xpath("//label[text()='Number']/parent::div/following-sibling::div/input")).sendKeys(passportID);
-		driver.findElement(By.xpath("")).sendKeys(issuedDate);
-		driver.findElement(By.xpath("")).sendKeys(expiryDate);
+		driver.findElement(By.xpath("//label[text()='Issued Date']/parent::div/following-sibling::div//input")).sendKeys(issuedDate);
+		driver.findElement(By.xpath("//label[text()='Expiry Date']/parent::div/following-sibling::div//input")).sendKeys(expiryDate);
 		driver.findElement(By.xpath("//textarea[@placeholder='Type Comments here']")).sendKeys(comment);
 		driver.findElement(By.xpath("//button[contains(string(),'Save')]")).click();
-
+		sleepInSecond(5);
+		
 		// Step 11: Verify dữ liệu đã tạo hiển thị đúng
 		// Khi truyền biến vào xpath thì cần phải tách chuỗi
-		Assert.assertTrue(driver.findElement(By.xpath("//div[text()=' " + passportID + " ']")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.xpath("//div[text()=' " + issuedDate + " ']")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.xpath("//div[text()=' " + expiryDate + " ']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//div[text()='" + passportID + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//div[text()='" + issuedDate + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//div[text()='" + expiryDate + "']")).isDisplayed());
 
 		// Step 12: Click vào icon Pencil (Edit)
 		driver.findElement(By.xpath("//i[@class='oxd-icon bi-pencil-fill']")).click();
+		sleepInSecond(5);
 		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Number']/parent::div/following-sibling::div/input")).getAttribute("value"), passportID );
 		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Issued Date']/parent::div/following-sibling::div//input")).getAttribute("value"), issuedDate );
 		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Expiry Date']/parent::div/following-sibling::div//input")).getAttribute("value"), expiryDate );
@@ -113,30 +122,47 @@ public class Topic_12_Textbox_TextArea_Part_II {
 		
 		// Step 13: Click vào tên User và chon Logout
 		driver.findElement(By.cssSelector("span.oxd-userdropdown-tab")).click();
+		sleepInSecond(2);
 		driver.findElement(By.xpath("//a[text()='Logout']")).click();
-
+		sleepInSecond(2);
+		
 		// Step 14: Tại màn Login nhập thông tin đã tạo hợp lệ ở Step 5
 		 
-		driver.findElement(By.xpath("//input[@name='username']")).sendKeys("userName");
-		driver.findElement(By.xpath("//input[@name='password']")).sendKeys("password");
-		driver.findElement(By.xpath("//button[contains(string(),' Login ')]")).click();
+		driver.findElement(By.xpath("//input[@name='username']")).sendKeys(userName);
+		driver.findElement(By.xpath("//input[@name='password']")).sendKeys(password);
+		sleepInSecond(2);
+		driver.findElement(By.xpath("//button[contains(string(),'Login')]")).click();
 		
 		// Step 15: Vào màn hình My Info
 		driver.findElement(By.xpath("//span[text()='My Info']")).click();
+		sleepInSecond(5);
 		
 		// Step 16: Verify các thông tin hiển thị đúng: Firstname/ Lastname/ EmployeeID
-		Assert.assertEquals(driver.findElements(By.xpath("//input[@name='firstName']")),firstName );
-		Assert.assertEquals(driver.findElements(By.xpath("//input[@name='lastName']")),lastName );
-		Assert.assertEquals(driver.findElements(By.xpath("//label[text()='Employee Id']/parent::div/following-sibling::div/input")), employeeID);
+		Assert.assertEquals(driver.findElement(By.xpath("//input[@name='firstName']")).getAttribute("value"),firstName );
+		Assert.assertEquals(driver.findElement(By.xpath("//input[@name='lastName']")).getAttribute("value"),lastName );
+		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Employee Id']/parent::div/following-sibling::div/input")).getAttribute("value"), employeeID);
 		
 		// Step 17: Vào màn hình Immigration => Click icon Pencil (Edit)
-		
-		
+		driver.findElement(By.xpath("//a[text()='Immigration']")).click();
+		sleepInSecond(2);
 		
 		// Step 18: Verify các thông tin hiển thị đúng
+		driver.findElement(By.xpath("//i[@class='oxd-icon bi-pencil-fill']")).click();
+		sleepInSecond(2);
+		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Number']/parent::div/following-sibling::div/input")).getAttribute("value"), passportID );
+		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Issued Date']/parent::div/following-sibling::div//input")).getAttribute("value"), issuedDate );
+		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Expiry Date']/parent::div/following-sibling::div//input")).getAttribute("value"), expiryDate );
+		Assert.assertEquals(driver.findElement(By.xpath("//label[text()='Comments']/parent::div/following-sibling::div/textarea")).getAttribute("value"), comment );
 		
 		
-		
+	}
+	private void sleepInSecond( long timeout) {
+		try {
+			Thread.sleep(timeout *1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@AfterClass
