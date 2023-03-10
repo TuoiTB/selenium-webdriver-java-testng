@@ -42,7 +42,7 @@ public class Topic_14_1_Custom_Dropdown {
 
 	}
 
-	@Test
+	//@Test
 	public void TC_01_JQuery() {
 		// for
 		// if
@@ -69,6 +69,66 @@ public class Topic_14_1_Custom_Dropdown {
 		
 	}
 	
+	//@Test
+	public void TC_02_React() {
+		driver.get("https://react.semantic-ui.com/maximize/dropdown-example-selection/");
+		
+		selectItemInCustomDropdown("//div[@class='ui fluid selection dropdown']","//div[@role='option']/span","Justen Kitsune");
+		Assert.assertEquals(driver.findElement(By.cssSelector("div.divider.text")).getText(), "Justen Kitsune");
+		
+		
+		
+	}
+	
+	
+	//@Test
+	public void TC_03_Vuejs() {
+		driver.get("https://mikerodham.github.io/vue-dropdowns/");
+		selectItemInCustomDropdown("//li[@class='dropdown-toggle']", "//ul[@class='dropdown-menu']/li", "Second Option");
+		Assert.assertEquals(driver.findElement(By.xpath("//li[@class='dropdown-toggle']")).getText(), "Second Option");
+	}
+	
+	@Test
+	public void TC_04_Editable() {
+		driver.get("https://react.semantic-ui.com/maximize/dropdown-example-search-selection/");
+		selectItemInEditableDropdown("//input[@class='search']","//div[@role='listbox']/div/span","Algeria");
+		Assert.assertEquals(driver.findElement(By.xpath("//div[@role='alert']")).getText(), "Algeria");
+		
+	}
+	
+	
+	public void selectItemInEditableDropdown(String xpathTextbox, String xpathChild, String expectedText) {
+		driver.findElement(By.xpath(xpathTextbox)).clear();
+		driver.findElement(By.xpath(xpathTextbox)).sendKeys(expectedText);
+		sleepInSecond(2);
+		explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(xpathChild)));
+		List<WebElement> allItems = driver.findElements(By.xpath(xpathChild));
+		for (WebElement tempElement : allItems) {
+
+			// getText từng item
+			String itemText = tempElement.getText();
+			System.out.println(itemText);
+			// kiểm tra text đúng với cái mình cần chọn
+			if (itemText.equals(expectedText)) {
+
+				//Scroll tới element
+				//Actions actions = new Actions(driver);
+				//actions.moveToElement(tempElement).perform();
+				((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoViewIfNeeded(true);", tempElement);
+				//((JavascriptExecutor)driver).executeScript("arguments[0].click();", tempElement);
+				sleepInSecond(5);
+				
+				// click vào item đó
+				tempElement.click();
+//				sleepInSecond(2);
+				// thoát khỏi vòng lặp khi tìm thấy item cần
+				break;
+			}
+		}
+		
+	}
+	
+	
 	
 	public void selectItemInCustomDropdown(String xpathParent, String xpathChild, String expectedText) {
 		driver.findElement(By.xpath(xpathParent)).click();
@@ -84,14 +144,14 @@ public class Topic_14_1_Custom_Dropdown {
 			if (itemText.equals(expectedText)) {
 
 				//Scroll tới element
-				Actions actions = new Actions(driver);
-				actions.moveToElement(tempElement).perform();
-//				((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", tempElement);
-				((JavascriptExecutor)driver).executeScript("arguments[0].click();", tempElement);
+				//Actions actions = new Actions(driver);
+				//actions.moveToElement(tempElement).perform();
+				((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoViewIfNeeded(true);", tempElement);
+				//((JavascriptExecutor)driver).executeScript("arguments[0].click();", tempElement);
 				sleepInSecond(5);
 				
 				// click vào item đó
-//				tempElement.click();
+				tempElement.click();
 //				sleepInSecond(2);
 				// thoát khỏi vòng lặp khi tìm thấy item cần
 				break;
