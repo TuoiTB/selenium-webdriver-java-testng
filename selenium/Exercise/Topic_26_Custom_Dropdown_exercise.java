@@ -14,6 +14,8 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.interactions.Actions;
 
 public class Topic_26_Custom_Dropdown_exercise {
 	WebDriver driver;// khai báo driver
@@ -75,8 +77,20 @@ public class Topic_26_Custom_Dropdown_exercise {
 		selectCustomDropdown("//span[@id='speed-button']","//ul[@id='speed-menu']/li/div","Faster");
 		Assert.assertEquals(driver.findElement(By.cssSelector("span#speed-button span.ui-selectmenu-text")).getText(), "Faster");
 		
+		
+		selectCustomDropdown("//span[@id='number-button']","//ul[@id='number-menu']/li/div","1");
+		Assert.assertEquals(driver.findElement(By.xpath("//span[@id='number-button']/span[@class='ui-selectmenu-text']")).getText(), "1");
+		
+		selectCustomDropdown("//span[@id='number-button']","//ul[@id='number-menu']/li/div","10");
+		Assert.assertEquals(driver.findElement(By.xpath("//span[@id='number-button']/span[@class='ui-selectmenu-text']")).getText(), "10");
+	
+		selectCustomDropdown("//span[@id='number-button']","//ul[@id='number-menu']/li/div","16");
+		Assert.assertEquals(driver.findElement(By.xpath("//span[@id='number-button']/span[@class='ui-selectmenu-text']")).getText(), "16");
+	
+		selectCustomDropdown("//span[@id='number-button']","//ul[@id='number-menu']/li/div","19");
+		Assert.assertEquals(driver.findElement(By.xpath("//span[@id='number-button']/span[@class='ui-selectmenu-text']")).getText(), "19");
 	}
-	@Test
+//	@Test
 	public void TC_02_ReactJS() {
 		driver.get("https://react.semantic-ui.com/maximize/dropdown-example-selection/");
 		selectCustomDropdown("//div[@id='root']","//div[@class='visible menu transition']/div/span","Stevie Feliciano");
@@ -86,13 +100,25 @@ public class Topic_26_Custom_Dropdown_exercise {
 		Assert.assertEquals( driver.findElement(By.xpath("//div[@class='divider text']")).getText(), "Justen Kitsune");
 	}
 	
-	@Test
+//	@Test
 	public void TC_03_VueJS() {
+		driver.get("https://mikerodham.github.io/vue-dropdowns/");
+		selectCustomDropdown("//li[@class='dropdown-toggle']","//ul[@class='dropdown-menu']/li/a","Second Option");
+		Assert.assertEquals(driver.findElement(By.xpath("//div[@class='btn-group']")).getText(), "Second Option");
+	}
+	
+	@Test
+	public void TC_04_Editable() {
+		driver.get("https://react.semantic-ui.com/maximize/dropdown-example-search-selection/");
+		editable("//input[@class='search']","//div[@role='combobox']/div[@role='listbox']/div","is","Aland Islands");
+		Assert.assertEquals(driver.findElement(By.xpath("//div[@role='alert']")).getText(), "Aland Islands");
+		
+		
+		
 		
 	}
 	
 	public void selectCustomDropdown(String xpathParent, String xpathChild, String expectedText) {
-		
 		
 		driver.findElement(By.xpath(xpathParent)).click();
 		
@@ -101,16 +127,37 @@ public class Topic_26_Custom_Dropdown_exercise {
 		
 		//Lưu all items vào 1 list
 		List<WebElement> allItems = driver.findElements(By.xpath(xpathChild));
-		
 		for (WebElement temporary_var : allItems) {
 			String itemText = temporary_var.getText();
 			if (itemText.equals(expectedText) ) {
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoViewIfNeeded(true);", temporary_var);
+				sleepInSecond(5);
 				temporary_var.click();
+				sleepInSecond(2);
 				break;
 			}
 		}
 	}
 	
+	public void editable(String xpathTextbox, String xpathChild, String textSearch, String expectedText) {
+		driver.findElement(By.xpath(xpathTextbox)).clear();
+		driver.findElement(By.xpath(xpathTextbox)).sendKeys(textSearch);
+		//Chờ 30s cho các item hiển thị lên
+		//explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("ul#speed-menu li div")));
+		
+		//Lưu all items vào 1 list
+		List<WebElement> allItems = driver.findElements(By.xpath(xpathChild));
+		for (WebElement temporary_var : allItems) {
+			String itemText = temporary_var.getText();
+			if (itemText.equals(expectedText) ) {
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoViewIfNeeded(true);", temporary_var);
+				sleepInSecond(5);
+				temporary_var.click();
+				sleepInSecond(2);
+				break;
+			}
+		}
+	}
 	private void sleepInSecond(long timeout) {
 		try {
 			Thread.sleep(timeout * 1000);

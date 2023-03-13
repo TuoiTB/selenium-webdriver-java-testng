@@ -42,7 +42,7 @@ public class Topic_14_1_Custom_Dropdown {
 
 	}
 
-	//@Test
+	@Test
 	public void TC_01_JQuery() {
 		// for
 		// if
@@ -88,7 +88,7 @@ public class Topic_14_1_Custom_Dropdown {
 		Assert.assertEquals(driver.findElement(By.xpath("//li[@class='dropdown-toggle']")).getText(), "Second Option");
 	}
 	
-	@Test
+	//@Test
 	public void TC_04_Editable() {
 		driver.get("https://react.semantic-ui.com/maximize/dropdown-example-search-selection/");
 		selectItemInEditableDropdown("//input[@class='search']","//div[@role='listbox']/div/span","Algeria");
