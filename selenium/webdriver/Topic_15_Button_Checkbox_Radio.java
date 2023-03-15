@@ -43,7 +43,7 @@ public class Topic_15_Button_Checkbox_Radio {
 
 	@Test
 	public void Button() {
-		//Step 01: 
+		//Step 01: mở page
 		driver.get("https://www.fahasa.com/customer/account/create");
 		
 		//Step 02: Navigate tab Đăng nhập
@@ -55,14 +55,7 @@ public class Topic_15_Button_Checkbox_Radio {
 		Assert.assertFalse((driver.findElement(loginButton)).isEnabled());
 		
 		//Step 04: Verify "Đăng nhập" button có background color là màu xám rgb(224,224,224)
-		String loginButtonBackgroundColor = driver.findElement(loginButton).getCssValue("background-color");
-		Color loginButtonColor = Color.fromString(loginButtonBackgroundColor);
-		String loginButtonBackgroundColorHexa = loginButtonColor.asHex();
-		
-		System.out.println(loginButtonBackgroundColor);
-		System.out.println(loginButtonBackgroundColorHexa);
-		
-		Assert.assertTrue(color.contains("rgb(224,224,224)"));
+		Assert.assertTrue(driver.findElement(loginButton).getCssValue("background").contains("rgb(224, 224, 224)"));
 		
 		//Step 05: Input dữ liệu hợp lệ vào Email/Mật khẩu textbox
 		driver.findElement(By.id("login_username")).sendKeys("0962065312");
@@ -72,10 +65,21 @@ public class Topic_15_Button_Checkbox_Radio {
 		//Step 06: Verify "Đăng nhập" button là enabled
 		Assert.assertTrue((driver.findElement(loginButton)).isEnabled());
 		
+		//Lấy ra mã màu của 1 element
+		//Chrome/Edge...: RGB 
+		//Firefox: RGBA
+		String loginButtonBackgroundColor = driver.findElement(loginButton).getCssValue("background-color");
+		
+		//chuyển từ rgb/rgba sang kiểu color
+		Color loginButtonColor = Color.fromString(loginButtonBackgroundColor);
+		
+		//Color có hàm chyển qua hexa
+		String loginButtonHexa = loginButtonColor.asHex().toUpperCase();
+		
 		//Step 07: Verify "Đăng nhập" button có background color là màu đỏ rgb = (201,33,39)
+		Assert.assertEquals(loginButtonHexa, "#C92127");
 		
-		
-		
+		//Viết gọn lại: Assert.assertEquals(Color.fromString(driver.findElement(loginButton).getCssValue("background-color")).asHex().toUpperCase(),"#C92127");
 	}
 	
 	
