@@ -34,7 +34,7 @@ public class Topic_17_Alert {
 		//driver.manage().window().maximize();
 		explicitWait = new WebDriverWait(driver, 10);
 	}
-	@Test
+//	@Test
 	public void TC_01_Accept_Alert() {
 		driver.get("https://automationfc.github.io/basic-form/index.html");
 		driver.findElement(By.xpath("//button[@onclick='jsAlert()']")).click();
@@ -62,20 +62,45 @@ public class Topic_17_Alert {
 		//alert.sendKeys("bjbgjbdjgdjg");
 	}
 	
-	@Test
+	//@Test
 	public void TC_02_Confirm_Alert() {
 		driver.get("https://automationfc.github.io/basic-form/index.html");
+		driver.findElement(By.xpath("//button[text()='Click for JS Confirm']")).click();
+		sleepInSecond(2);
+		Alert alert = explicitWait.until(ExpectedConditions.alertIsPresent());
+		Assert.assertEquals(alert.getText(), "I am a JS Confirm");
+		alert.dismiss();
+		sleepInSecond(2);
+		Assert.assertEquals(driver.findElement(By.id("result")).getText(), "You clicked: Cancel");
 		
 	}
-	@Test
+	//@Test
 	public void TC_03_Prompt_Alert() {
+		
 		driver.get("https://automationfc.github.io/basic-form/index.html");
+		driver.findElement(By.xpath("//button[text()='Click for JS Prompt']")).click();
+		sleepInSecond(2);
+		Alert alert = explicitWait.until(ExpectedConditions.alertIsPresent());
+		Assert.assertEquals(alert.getText(), "I am a JS prompt");
+		String senkeyInput = "tubaotuoi";
+		alert.sendKeys(senkeyInput);
+		sleepInSecond(2);
+		alert.accept();
+		Assert.assertEquals(driver.findElement(By.id("result")).getText(), "You entered: " + senkeyInput);
 		
 	}
 	@Test
 	public void TC_04_Authentication_Alert() {
-		driver.get("https://automationfc.github.io/basic-form/index.html");
+		//Không dùng thư viện alert để xử lý được
+		//Dùng selenium trick:
 		
+		driver.get("http://the-internet.herokuapp.com/basic_auth");
+	
+	}
+	@Test
+	public void TC_05_Authentication_Alert_AUTO_IT() {
+		driver.get("http://the-internet.herokuapp.com/basic_auth");
+	
 	}
 	private void sleepInSecond(long timeout) {
 		try {
