@@ -1,11 +1,13 @@
 package webdriver;
 
 import java.awt.Checkbox;
+import java.awt.RenderingHints.Key;
 import java.sql.Driver;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -75,26 +77,52 @@ public class Topic_18_Action_Part_I {
 		
 		
 	}
-	@Test
-	public void TC_03_Click_and_Hold_Select_Multiple() {
+	//@Test
+	public void TC_03_Click_and_Hold_Select_Multiple_Block() {
 		//Step 1: Truy cập trang
 		driver.get("https://automationfc.github.io/jquery-selectable/");
 		
+		//Cách 1:
 		//Step 2: Click and hold từ 1->4
 		//Click chuột trái và giữ 1 số bắt đầu
 		action.clickAndHold(driver.findElement(By.xpath("//li[text()='1']"))).perform();
 		
 		//Kéo chuột đến số kết thúc
 		action.moveToElement(driver.findElement(By.xpath("//li[text()='4']"))).perform();
-		//action.release().perform();
+		action.release().perform();
 		sleepInSecond(2);
 		//Sau khi chọn- kiểm tra có đúng 4 phần tử đã được chọn thành công
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class='ui-state-default ui-selectee ui-selected' and text()='1']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class='ui-state-default ui-selectee ui-selected' and text()='2']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class='ui-state-default ui-selectee ui-selected' and text()='3']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class='ui-state-default ui-selectee ui-selected' and text()='4']")).isDisplayed());
 		
+		//Cách 2: 
+		List<WebElement> allNumber = driver.findElements(By.cssSelector("ol#selectable li"));	
 		
+		action.clickAndHold(allNumber.get(1)).moveToElement(allNumber.get(7)).release().perform();
+		sleepInSecond(3);
 		
+		List<WebElement> selectedNumber = driver.findElements(By.cssSelector("ol#selectable li.ui-selected"));
+		Assert.assertEquals(selectedNumber.size(),6);
 		
 	}
-	
+	@Test
+	public void TC_04_Click_and_Hold_Select_Multiple_Random() {
+		driver.get("https://automationfc.github.io/jquery-selectable/");
+		
+		List<WebElement> allNumber = driver.findElements(By.cssSelector("ol#selectable li"));	
+		action.keyDown(Keys.CONTROL).perform();
+		action.click(allNumber.get(0))
+		.click(allNumber.get(2))
+		.click(allNumber.get(5))
+		.click(allNumber.get(8))
+		.click(allNumber.get(10)).perform();
+		
+		List<WebElement> selectedNumber = driver.findElements(By.cssSelector("ol#selectable li.ui-selected"));
+		Assert.assertEquals(selectedNumber.size(),5);
+		
+	}
 	private void sleepInSecond(long timeout) {
 		try {
 			Thread.sleep(timeout * 1000);
