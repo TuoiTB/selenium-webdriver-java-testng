@@ -79,7 +79,8 @@ public class Topic_15_Button_Checkbox_Radio {
 		//Step 07: Verify "Đăng nhập" button có background color là màu đỏ rgb = (201,33,39)
 		Assert.assertEquals(loginButtonHexa, "#C92127");
 		
-		//Viết gọn lại: Assert.assertEquals(Color.fromString(driver.findElement(loginButton).getCssValue("background-color")).asHex().toUpperCase(),"#C92127");
+		//Viết gọn lại: 
+		Assert.assertEquals(Color.fromString(driver.findElement(loginButton).getCssValue("background-color")).asHex().toUpperCase(),"#C92127");
 	}
 	
 	
