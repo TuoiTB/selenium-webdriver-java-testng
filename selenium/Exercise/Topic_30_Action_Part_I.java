@@ -5,6 +5,8 @@ import java.awt.Desktop.Action;
 import java.sql.Driver;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -13,6 +15,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.server.DefaultDriverFactory;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -36,11 +39,12 @@ public class Topic_30_Action_Part_I {
 		}
 		// Khởi tạo driver
 		driver = new ChromeDriver();
+		//driver = new FirefoxDriver();
 		action = new Actions(driver);
 		System.out.println(driver.toString());
 		// Khi khởi tạo cần biến driver thì mới khởi tạo ở @BeforeClass
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.manage().window().maximize();
+		//driver.manage().window().maximize();
 	}
 	//@Test
 	public void TC_01_Hover_To_Element_Tooltip_1() {
@@ -66,7 +70,7 @@ public class Topic_30_Action_Part_I {
 		
 	}
 	
-	@Test
+	//@Test
 	public void TC_04_Click_and_hold_block() {
 		driver.get("https://automationfc.github.io/jquery-selectable/");
 		List<WebElement> allNumber = driver.findElements(By.cssSelector("ol#selectable li"));
@@ -76,7 +80,7 @@ public class Topic_30_Action_Part_I {
 		Assert.assertEquals(selectedNumber.size(), 2);
 	}
 	
-	@Test
+	//@Test
 	public void TC_05_Click_and_hold_random() {
 		driver.get("https://automationfc.github.io/jquery-selectable/");
 		List<WebElement> allNumber = driver.findElements(By.cssSelector("ol#selectable li"));
@@ -88,6 +92,56 @@ public class Topic_30_Action_Part_I {
 		
 		List<WebElement> selectedNumber = driver.findElements(By.cssSelector("ol#selectable li.ui-selected"));
 		Assert.assertEquals(selectedNumber.size(), 4);
+	}
+	
+	//@Test
+	public void TC_06_Double_Click() {
+		driver.get("https://automationfc.github.io/basic-form/index.html");
+		if (driver.toString().contains("Firefox")) {
+			((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.xpath("//button[@ondblclick='doubleClickMe()']")));
+		}
+		action.doubleClick(driver.findElement(By.xpath("//button[@ondblclick='doubleClickMe()']"))).perform();
+		sleepInSecond(2);
+		Assert.assertEquals(driver.findElement(By.cssSelector("p#demo")).getText(), "Hello Automation Guys!");
+		
+	}
+	
+	//@Test
+	public void TC_07_Right_click() {
+		driver.get("http://swisnl.github.io/jQuery-contextMenu/demo.html");
+		
+		Assert.assertFalse(driver.findElement(By.cssSelector("li.context-menu-icon-quit")).isDisplayed());
+		
+		action.contextClick(driver.findElement(By.cssSelector("span.context-menu-one"))).perform();
+		sleepInSecond(3);
+		
+		Assert.assertTrue(driver.findElement(By.cssSelector("li.context-menu-icon-quit")).isDisplayed());
+		
+		action.moveToElement(driver.findElement(By.cssSelector("li.context-menu-icon-quit"))).perform();
+		sleepInSecond(3);
+		
+		Assert.assertTrue(driver.findElement(By.cssSelector("li.context-menu-icon-quit.context-menu-hover.context-menu-visible")).isDisplayed());
+		
+		action.click(driver.findElement(By.cssSelector("li.context-menu-icon-quit"))).perform();
+		sleepInSecond(3);
+		
+		driver.switchTo().alert().accept();
+		sleepInSecond(3);
+		
+		Assert.assertFalse(driver.findElement(By.cssSelector("li.context-menu-icon-quit")).isDisplayed());
+		
+	}
+	
+	@Test
+	public void TC_08_Drag_and_Drop_HTML4() {
+		driver.get("https://automationfc.github.io/kendo-drag-drop/");
+		action.dragAndDrop(driver.findElement(By.cssSelector("div#draggable")), 
+				driver.findElement(By.cssSelector("div#droptarget"))).perform();
+		sleepInSecond(3);
+		
+		Assert.assertEquals(driver.findElement(By.cssSelector("div#droptarget")).getText(), "You did great!");
+		
+		Assert.assertEquals(Color.fromString(driver.findElement(By.cssSelector("div#droptarget")).getCssValue("background-color")).asHex(),"#03a9f4");
 	}
 	
 	private void sleepInSecond(long timeout) {
