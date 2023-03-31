@@ -39,7 +39,10 @@ public class DVKH {
 		driver.manage().window().maximize();
 	}
 	
-	
+	@Test
+	public void TC_01_() {
+		
+	}
 	private void sleepInSecond(long timeout) {
 		try {
 			Thread.sleep(timeout * 1000);
