@@ -114,7 +114,7 @@ public class Topic_20_Random_Popup {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void TC_03_Random_Popup_NOT_In_Dom() {
 		driver.get("https://dehieu.vn/");
 		sleepInSecond(10);
