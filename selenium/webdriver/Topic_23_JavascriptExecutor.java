@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 public class Topic_23_JavascriptExecutor {
 	WebDriver driver;// khai báo driver
@@ -19,6 +20,10 @@ public class Topic_23_JavascriptExecutor {
 	String osName = System.getProperty("os.name");
 	Random rand = new Random();
 	String emailAddress = "automation" + rand.nextInt(999) + "@gmail.vn";
+	String password = "automation123@";
+	String firstName = "Auto";
+	String lastName = "Test";
+	String middleName = "FC";
 	JavascriptExecutor jsExecutor;
 	WebDriverWait explicitWait;
 	@BeforeClass
@@ -51,7 +56,7 @@ public class Topic_23_JavascriptExecutor {
 		//Get domain và verify
 		executeForBrowser("return document.domain;");
 		String liveGuruDomain = (String) executeForBrowser("return document.domain;");
-		Assert.assertEquals(liveGuruDomain, "http://live.techpanda.org/");
+		Assert.assertEquals(liveGuruDomain, "live.techpanda.org");
 		
 		//Get url và verify url
 		executeForBrowser("return document.URL;");
@@ -106,7 +111,91 @@ public class Topic_23_JavascriptExecutor {
 		Assert.assertEquals(guruDomain, "demo.guru99.com");
 	}
 	
+	//@Test
+	public void TC_02_Rode() {
+		driver.get("https://warranty.rode.com/");
+		//Click button register
+		driver.findElement(By.xpath("//button[contains(text(),'Register')]")).click();
+		sleepInSecond(3);
+		
+		// Verify msg validation
+		getElementValidationMessage("//input[@id='firstname']");
+		Assert.assertEquals(getElementValidationMessage("//input[@id='firstname']"), "Please fill out this field.");
+		
+		//senkeys
+		driver.findElement(By.xpath("//input[@id='firstname']")).sendKeys("Automation");
+		//Click register
+		driver.findElement(By.xpath("//button[contains(text(),'Register')]")).click();
+		sleepInSecond(3);
+		Assert.assertEquals(getElementValidationMessage("//input[@id='surname']"), "Please fill out this field.");
+		
+		//Senkeys + click
+		driver.findElement(By.xpath("//input[@id='surname']")).sendKeys(emailAddress);
+		driver.findElement(By.xpath("//button[contains(text(),'Register')]")).click();
+		sleepInSecond(3);
+		Assert.assertEquals(getElementValidationMessage("//div[contains(text(),'Register')]/following-sibling::div/form[@method='POST']/div//input[@id='email']"), "Please fill out this field.");
+		
+		
+		//Senkeys email sai dịnh dạng + click
+		//driver.findElement(By.xpath("//div[contains(text(),'Register')]/following-sibling::div/form[@method='POST']/div//input[@id='email']")).sendKeys("tubaotuoi@gmail@com");
+		//driver.findElement(By.xpath("//button[contains(text(),'Register')]")).click();
+		//sleepInSecond(3);
+		//Assert.assertEquals(getElementValidationMessage("//div[contains(text(),'Register')]/following-sibling::div/form[@method='POST']/div//input[@id='email']"), "Please enter an email address.");
+		//driver.findElement(By.xpath("//div[contains(text(),'Register')]/following-sibling::div/form[@method='POST']/div//input[@id='email']")).clear();
+		
+		//Senkeys + click
+		driver.findElement(By.xpath("//div[contains(text(),'Register')]/following-sibling::div/form[@method='POST']/div//input[@id='email']")).sendKeys(emailAddress);
+		driver.findElement(By.xpath("//button[contains(text(),'Register')]")).click();
+		sleepInSecond(3);
+		
+		Assert.assertEquals(getElementValidationMessage("//div[contains(text(),'Register')]/following-sibling::div/form[@method='POST']/div//input[@id='password']"), "Please fill out this field.");
+		
+		//Senkeys + click
+		driver.findElement(By.xpath("//div[contains(text(),'Register')]/following-sibling::div/form[@method='POST']/div//input[@id='password']")).sendKeys(password);
+		driver.findElement(By.xpath("//button[contains(text(),'Register')]")).click();
+		sleepInSecond(3);
+		
+		Assert.assertEquals(getElementValidationMessage("//input[@id='password-confirm']"), "Please fill out this field.");
+		
+		//Senkeys
+		driver.findElement(By.xpath("//input[@id='password-confirm']")).sendKeys(password);
+		
+	}
 
+	@Test
+	public void TC_03_Tech_Panda() {
+		
+		navigateToUrlByJS("http://live.techpanda.org/");
+		hightlightElement("//div[@class='account-cart-wrapper']//a");
+		clickToElementByJS("//div[@class='account-cart-wrapper']//a");
+		
+		hightlightElement("//div[@id='header-account']//li[@class='first']");
+		clickToElementByJS("//div[@id='header-account']//li[@class='first']/a");
+		sleepInSecond(2);
+		
+		clickToElementByJS("//div[@class='content']/following-sibling::div[@class='buttons-set']//a");
+		sleepInSecond(2);
+		
+		sendkeyToElementByJS("//input[@id='firstname']", firstName);
+		sendkeyToElementByJS("//input[@id='middlename']", middleName);
+		sendkeyToElementByJS("//input[@id='lastname']", lastName);
+		sendkeyToElementByJS("//input[@id='email_address']", emailAddress);
+		sendkeyToElementByJS("//input[@id='password']", password);
+		sendkeyToElementByJS("//input[@id='confirmation']", password);
+		sleepInSecond(2);
+		
+		hightlightElement("//button[@title='Register']");
+		clickToElementByJS("//button[@title='Register']");
+		sleepInSecond(2);
+		
+		Assert.assertTrue(getInnerText().contains("Thank you for registering with Main Website Store."));
+		
+		clickToElementByJS("//div[@id='header-account']//li[@class=' last']/a");
+		sleepInSecond(2);
+		
+		Assert.assertTrue(driver.findElement(By.xpath("//h2//img")).isDisplayed());
+		
+	}
 	
 	
 	
