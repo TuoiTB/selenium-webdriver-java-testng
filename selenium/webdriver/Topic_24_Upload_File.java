@@ -1,12 +1,14 @@
 package webdriver;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -16,12 +18,10 @@ public class Topic_24_Upload_File {
 	String projectPath = System.getProperty("user.dir");
 	String osName = System.getProperty("os.name");
 	String small = "small.jpg";
-	String medium ="medium.jpg";
-	String large = "large.jpg";
+	String sea  ="sea.jpg";
 	
 	String small_path = projectPath + File.separator + "uploadFiles" + File.separator + small ;
-	String medium_path = projectPath + File.separator + "uploadFiles" + File.separator + medium;
-	String large_path = projectPath + File.separator + "uploadFiles" + File.separator + large;
+	String sea_path = projectPath + File.separator + "uploadFiles" + File.separator + sea;
 	
 	@BeforeClass
 	public void beforeClass() {
@@ -38,16 +38,68 @@ public class Topic_24_Upload_File {
 		driver.manage().window().maximize();
 	}
 	
-	@Test
+	//@Test
 	public void TC_01_Upload_Single_File() {
 		driver.get("https://blueimp.github.io/jQuery-File-Upload/");
-		WebElement uploadFiles = driver.findElement(By.xpath("//input[@type ='file']"));
 		
-		uploadFiles.sendKeys(small_path);
-		sleepInSecond(3);
+		//upload file
+		By uploadFiles = By.xpath("//input[@type ='file']");
+		driver.findElement(uploadFiles).sendKeys(small_path);
+		sleepInSecond(2);
+		
+		driver.findElement(uploadFiles).sendKeys(sea_path);
+		sleepInSecond(2);
+		
+		
 	
+		//Verify ảnh được load lên thành công 
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='small.jpg']")).isDisplayed());
+		//Để khi update code k cần update nhiều thì thay tên ảnh thành biến đã khai báo ở trên
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + small + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + sea + "']")).isDisplayed());
+		
+		//Click button Start
+		List<WebElement> startButtons = driver.findElements(By.cssSelector("table.table-striped button.start"));
+		for (WebElement start : startButtons) {
+			start.click();
+			sleepInSecond(2);
+		}
+		
+		//Verify 
+		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='" + small + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='" + sea + "']")).isDisplayed());
+		
+		
 	}
 	
+	@Test
+	public void TC_02_Upload_Multiple_File() {
+		driver.get("https://blueimp.github.io/jQuery-File-Upload/");
+		
+		//upload file
+		By uploadFiles = By.xpath("//input[@type ='file']");
+		driver.findElement(uploadFiles).sendKeys(small_path + "\n" + sea_path );
+		sleepInSecond(2);
+	
+		//Verify ảnh được load lên thành công 
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='small.jpg']")).isDisplayed());
+		//Để khi update code k cần update nhiều thì thay tên ảnh thành biến đã khai báo ở trên
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + small + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + sea + "']")).isDisplayed());
+		
+		//Click button Start
+		List<WebElement> startButtons = driver.findElements(By.cssSelector("table.table-striped button.start"));
+		for (WebElement start : startButtons) {
+			start.click();
+			sleepInSecond(2);
+		}
+		
+		//Verify 
+		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='" + small + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='" + sea + "']")).isDisplayed());
+		
+		
+	}
 	
 	private void sleepInSecond(long timeout) {
 		try {
