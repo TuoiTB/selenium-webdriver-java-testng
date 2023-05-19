@@ -41,7 +41,7 @@ public class Topic_29_Explicit_Wait {
 		
 		// Khi khởi tạo cần biến driver thì mới khởi tạo ở @BeforeClass
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		//driver.manage().window().maximize();
+		driver.manage().window().maximize();
 		
 	}
 	@Test
