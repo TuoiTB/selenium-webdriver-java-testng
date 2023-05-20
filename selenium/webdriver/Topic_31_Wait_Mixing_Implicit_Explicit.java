@@ -15,6 +15,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -27,6 +28,7 @@ public class Topic_31_Wait_Mixing_Implicit_Explicit {
 	String projectPath = System.getProperty("user.dir");
 	String osName = System.getProperty("os.name");
 	WebDriverWait explicitWait;
+	FluentWait<?> fluentWait;
 	
 	@BeforeClass
 	public void beforeClass() {
@@ -76,19 +78,103 @@ public class Topic_31_Wait_Mixing_Implicit_Explicit {
 		System.out.println("2 - End time: " + getDateTimeNow());
 		
 	}
-	
 	@Test
+	public void TC_02_1_Element_Not_Found_Implicit() {
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		explicitWait = new WebDriverWait(driver, 0);
+		
+		driver.get("https://www.facebook.com/");
+		
+		//Implicit + Explicit
+		System.out.println("1 - Start time: " + getDateTimeNow());
+		try {
+			explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@name='selenium']")));
+		} catch (Exception e) {
+		e.printStackTrace();
+		}
+		System.out.println("2 - End time: " + getDateTimeNow());
+	}
+	
+	//@Test
 	public void TC_03_Element_Not_Found_Implicit_and_Explicit() {
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		explicitWait = new WebDriverWait(driver, 10);
 		
 		driver.get("https://www.facebook.com/");
 		
 		//Implicit + Explicit
 		System.out.println("1 - Start time: " + getDateTimeNow());
-		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@name='selenium']")));
+		try {
+			explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@name='selenium']")));
+		} catch (Exception e) {
+		e.printStackTrace();
+		}
 		System.out.println("2 - End time: " + getDateTimeNow());
 	}
+	
+	//@Test
+	public void TC_04_Element_Not_Found_Only_Explicit_By() {
+		//Nếu k set implicit thì mặc định =0s
+		//driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		explicitWait = new WebDriverWait(driver, 5);
+		
+		driver.get("https://www.facebook.com/");
+		System.out.println("1 - Start time: " + getDateTimeNow());
+		try {
+			explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@name='selenium']")));
+		} catch (Exception e) 
+		{
+		e.printStackTrace();
+		}
+		System.out.println("2 - End time: " + getDateTimeNow());
+		
+	}
+	
+	//@Test
+	public void TC_05_Element_Not_Found_Only_Explicit_WebElement() {
+		//Nếu k set implicit thì mặc định =0s
+		//driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		explicitWait = new WebDriverWait(driver, 5);
+		
+		driver.get("https://www.facebook.com/");
+		System.out.println("1 - Start time: " + getDateTimeNow());
+		try {
+			//Case 1: Nếu element được tìm thấy thì sẽ chạy tiếp hàm visiblilityOf
+			//Case 2: Nếu element không được tìm thấy thì sẽ đánh fail luôn và không chạy hàm visiblilityOf
+			WebElement element = driver.findElement(By.xpath("//button[@name='selenium']"));
+			explicitWait.until(ExpectedConditions.visibilityOf(element));
+			//=> khi sử dụng hạn chế dùng các hàm explicit có tham số là WebElement
+			
+		} catch (Exception e) 
+		{
+		e.printStackTrace();
+		}
+		System.out.println("2 - End time: " + getDateTimeNow());
+		
+	}
+	
+	@Test
+		public void TC_06_Element_Not_Found_Implicit_Explicit_WebElement() {
+			//Nếu k set implicit thì mặc định =0s
+			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+			explicitWait = new WebDriverWait(driver, 5);
+			
+			driver.get("https://www.facebook.com/");
+			System.out.println("1 - Start time: " + getDateTimeNow());
+			try {
+				//Case 1: Nếu element được tìm thấy thì sẽ chạy tiếp hàm visiblilityOf
+				//Case 2: Nếu element không được tìm thấy thì sẽ đánh fail luôn và không chạy hàm visiblilityOf
+				WebElement element = driver.findElement(By.xpath("//button[@name='selenium']"));
+				explicitWait.until(ExpectedConditions.visibilityOf(element));
+				//=> khi sử dụng hạn chế dùng các hàm explicit có tham số là WebElement
+				
+			} catch (Exception e) 
+			{
+			e.printStackTrace();
+			}
+			System.out.println("2 - End time: " + getDateTimeNow());
+			
+		}
 	
 	private String getDateTimeNow() {
 		Date date = new Date();
@@ -96,7 +182,6 @@ public class Topic_31_Wait_Mixing_Implicit_Explicit {
 	}
 	
 	@AfterClass
-
 	public void afterClass() {
 		driver.quit();
 	}
