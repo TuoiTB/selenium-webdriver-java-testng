@@ -1,4 +1,4 @@
-package webdriver;
+package groupTest;
 
 import java.awt.Checkbox;
 import java.sql.Driver;
@@ -19,7 +19,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class Topic_00_Template {
+public class AlwayRun {
 	WebDriver driver;// khai báo driver
 	String projectPath = System.getProperty("user.dir");
 	String osName = System.getProperty("os.name");
@@ -37,7 +37,14 @@ public class Topic_00_Template {
 		// Khi khởi tạo cần biến driver thì mới khởi tạo ở @BeforeClass
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
+		Assert.assertTrue(false);
 	}
+	@Test
+	public void TC_01() {
+		driver.get("https://www.facebook.com/");
+	}
+	
+	
 	
 	private void sleepInSecond(long timeout) {
 		try {
@@ -48,8 +55,8 @@ public class Topic_00_Template {
 		}
 	}
 	
-	@AfterClass
+	@AfterClass(alwaysRun = true)
 	public void afterClass() {
-		//driver.quit();
+		driver.quit();
 	}
 }
