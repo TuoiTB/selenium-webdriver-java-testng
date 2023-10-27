@@ -1,22 +1,16 @@
 package webdriver;
 
-import static org.testng.Assert.assertTrue;
-
-import java.awt.Checkbox;
-import java.sql.Driver;
+import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -41,9 +35,10 @@ public class Topic_33_Wait_Page_Ready {
 		driver = new ChromeDriver();
 		System.out.println(driver.toString());
 		// Khi khởi tạo cần biến driver thì mới khởi tạo ở @BeforeClass
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		
 		driver.manage().window().maximize();
-		explicitWait = new WebDriverWait(driver, 3);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		action = new Actions(driver);
 	}
 	
@@ -142,7 +137,7 @@ public class Topic_33_Wait_Page_Ready {
 	
 	//Step 03: Cách 2: Wait for page load complete/ page ready
 	public boolean isPageLoadedSuccess() {
-		WebDriverWait explicitWait = new WebDriverWait(driver, 30);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		
 		//Điều kiện 1
 		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;

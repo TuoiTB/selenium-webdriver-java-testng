@@ -1,13 +1,12 @@
 package webdriver;
 
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -30,9 +29,10 @@ public class Topic_17_Alert {
 		}
 
 		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		//driver.manage().window().maximize();
-		explicitWait = new WebDriverWait(driver, 10);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		// Khi khởi tạo cần biến driver thì mới khởi tạo ở @BeforeClass
+		// driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 	}
 //	@Test
 	public void TC_01_Accept_Alert() {

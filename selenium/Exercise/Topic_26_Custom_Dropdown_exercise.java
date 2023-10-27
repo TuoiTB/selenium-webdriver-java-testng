@@ -1,21 +1,19 @@
 package Exercise;
 
+import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.interactions.Actions;
 
 public class Topic_26_Custom_Dropdown_exercise {
 	WebDriver driver;// khai báo driver
@@ -34,10 +32,10 @@ public class Topic_26_Custom_Dropdown_exercise {
 		// Khởi tạo driver
 		driver = new ChromeDriver();
 		System.out.println(driver.toString());
-		explicitWait = new WebDriverWait(driver, 30);
+		//explicitWait = new WebDriverWait(driver, 30);
 		// Khi khởi tạo cần biến driver thì mới khởi tạo ở @BeforeClass
 		// driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		// driver.manage().window().maximize();
 
 	}

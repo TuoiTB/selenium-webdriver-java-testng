@@ -1,24 +1,14 @@
 package webdriver;
-import java.awt.Checkbox;
-import java.io.File;
-import java.sql.Driver;
+import java.time.Duration;
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -49,8 +39,8 @@ public class Topic_31_Wait_Mixing_Implicit_Explicit {
 
 	//@Test
 	public void TC_01_Element_Found() {
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-		explicitWait = new WebDriverWait(driver, 15);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		
 		driver.get("https://www.facebook.com/");
 		
@@ -68,8 +58,8 @@ public class Topic_31_Wait_Mixing_Implicit_Explicit {
 
 	//@Test
 	public void TC_02_Element_Not_Found_Implicit() {
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		//explicitWait = new WebDriverWait(driver, 10);
+		//explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		
 		driver.get("https://www.facebook.com/");
 		
@@ -80,8 +70,8 @@ public class Topic_31_Wait_Mixing_Implicit_Explicit {
 	}
 	@Test
 	public void TC_02_1_Element_Not_Found_Implicit() {
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		explicitWait = new WebDriverWait(driver, 0);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(0));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 		
 		driver.get("https://www.facebook.com/");
 		
@@ -97,8 +87,8 @@ public class Topic_31_Wait_Mixing_Implicit_Explicit {
 	
 	//@Test
 	public void TC_03_Element_Not_Found_Implicit_and_Explicit() {
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		explicitWait = new WebDriverWait(driver, 10);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 		
 		driver.get("https://www.facebook.com/");
 		
@@ -115,8 +105,8 @@ public class Topic_31_Wait_Mixing_Implicit_Explicit {
 	//@Test
 	public void TC_04_Element_Not_Found_Only_Explicit_By() {
 		//Nếu k set implicit thì mặc định =0s
-		//driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		explicitWait = new WebDriverWait(driver, 5);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		
 		driver.get("https://www.facebook.com/");
 		System.out.println("1 - Start time: " + getDateTimeNow());
@@ -133,8 +123,8 @@ public class Topic_31_Wait_Mixing_Implicit_Explicit {
 	//@Test
 	public void TC_05_Element_Not_Found_Only_Explicit_WebElement() {
 		//Nếu k set implicit thì mặc định =0s
-		//driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		explicitWait = new WebDriverWait(driver, 5);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		
 		driver.get("https://www.facebook.com/");
 		System.out.println("1 - Start time: " + getDateTimeNow());
@@ -156,8 +146,8 @@ public class Topic_31_Wait_Mixing_Implicit_Explicit {
 	@Test
 		public void TC_06_Element_Not_Found_Implicit_Explicit_WebElement() {
 			//Nếu k set implicit thì mặc định =0s
-			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-			explicitWait = new WebDriverWait(driver, 5);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 			
 			driver.get("https://www.facebook.com/");
 			System.out.println("1 - Start time: " + getDateTimeNow());

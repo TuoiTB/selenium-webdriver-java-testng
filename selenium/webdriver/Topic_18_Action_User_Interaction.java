@@ -1,8 +1,6 @@
 package webdriver;
 
 import java.awt.AWTException;
-import java.awt.Checkbox;
-import java.awt.RenderingHints.Key;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.io.BufferedReader;
@@ -11,9 +9,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
-import java.sql.Driver;
+import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -22,12 +20,8 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -56,7 +50,7 @@ public class Topic_18_Action_User_Interaction {
 		jsExecutor = (JavascriptExecutor) driver;
 		System.out.println(driver.toString());
 		// Khi khởi tạo cần biến driver thì mới khởi tạo ở @BeforeClass
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		//driver.manage().window().maximize();
 	}
 
@@ -274,6 +268,7 @@ public class Topic_18_Action_User_Interaction {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void dragAndDropHTML5ByOffset(String sourceLocator, String targetLocator) throws AWTException {
 
 		WebElement source = driver.findElement(By.cssSelector(sourceLocator));

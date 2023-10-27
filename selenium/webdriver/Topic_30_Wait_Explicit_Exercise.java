@@ -1,20 +1,11 @@
 package webdriver;
-import java.awt.Checkbox;
 import java.io.File;
-import java.sql.Driver;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -46,7 +37,7 @@ public class Topic_30_Wait_Explicit_Exercise {
 
 	//@Test
 	public void TC_01_Not_Enough() {
-		explicitWait = new WebDriverWait(driver, 3);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		driver.get("https://automationfc.github.io/dynamic-loading/");
 		driver.findElement(By.cssSelector("div#start>button")).click();
 		
@@ -62,7 +53,7 @@ public class Topic_30_Wait_Explicit_Exercise {
 
 	//@Test
 	public void TC_02_Equal() {
-		explicitWait = new WebDriverWait(driver, 5);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		driver.get("https://automationfc.github.io/dynamic-loading/");
 		driver.findElement(By.cssSelector("div#start>button")).click();
 		
@@ -77,7 +68,7 @@ public class Topic_30_Wait_Explicit_Exercise {
 	
 	//@Test
 	public void TC_03_Greater() {
-		explicitWait = new WebDriverWait(driver, 100);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(100));
 		driver.get("https://automationfc.github.io/dynamic-loading/");
 		driver.findElement(By.cssSelector("div#start>button")).click();
 		
@@ -92,7 +83,7 @@ public class Topic_30_Wait_Explicit_Exercise {
 	
 	//@Test
 	public void TC_01_Visible() {
-		explicitWait = new WebDriverWait(driver, 30);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		driver.get("https://automationfc.github.io/dynamic-loading/");
 		driver.findElement(By.cssSelector("div#start>button")).click();
 		
@@ -109,7 +100,7 @@ public class Topic_30_Wait_Explicit_Exercise {
 
 	//@Test
 	public void TC_02_Invisible() {
-		explicitWait = new WebDriverWait(driver, 30);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		driver.get("https://automationfc.github.io/dynamic-loading/");
 		driver.findElement(By.cssSelector("div#start>button")).click();
 		
@@ -126,7 +117,7 @@ public class Topic_30_Wait_Explicit_Exercise {
 	
 	//@Test
 	public void TC_03_Text_To_Be() {
-		explicitWait = new WebDriverWait(driver, 30);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		driver.get("https://automationfc.github.io/dynamic-loading/");
 		driver.findElement(By.cssSelector("div#start>button")).click();
 		
@@ -143,7 +134,7 @@ public class Topic_30_Wait_Explicit_Exercise {
 	
 	//@Test
 	public void TC_04_Telerik() {
-		explicitWait = new WebDriverWait(driver, 30);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		driver.get("https://demos.telerik.com/aspnet-ajax/ajaxloadingpanel/functionality/explicit-show-hide/defaultcs.aspx");
 		
 		//Wait cho calendar visible
@@ -166,7 +157,7 @@ public class Topic_30_Wait_Explicit_Exercise {
 	
 	@Test
 	public void TC_05_Upload_File() {
-		explicitWait = new WebDriverWait(driver, 30);
+		explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		driver.get("https://gofile.io/welcome");
 		
 		//Wait cho loading icon invisible

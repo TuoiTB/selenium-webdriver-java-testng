@@ -1,19 +1,10 @@
 package webdriver;
 
-import java.awt.Checkbox;
-import java.sql.Driver;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.Color;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -34,12 +25,12 @@ public class Topic_28_Wait_Static {
 		}
 		// Khởi tạo driver
 		driver = new ChromeDriver();
-		//explicitWait = new WebDriverWait(driver, 15);
 		System.out.println(driver.toString());
 		
+		//explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		// Khi khởi tạo cần biến driver thì mới khởi tạo ở @BeforeClass
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		//driver.manage().window().maximize();
+		// driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		
 	}
 	@Test
